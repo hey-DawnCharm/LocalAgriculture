@@ -28,276 +28,155 @@
 </head>
 <body class="bg-gray-50 min-h-screen font-sans">
     <div class="max-w-3xl mx-auto px-4 py-5 md:py-8">
-        <!-- 页面标题 -->
-        <h1 class="text-2xl md:text-3xl font-bold text-center text-primary mb-6">
-            农药稀释倍数计算器
-        </h1>
+        <!-- 标题 + 副标题 -->
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-primary mb-2">农药稀释倍数计算器</h1>
         <p class="text-center text-gray-500 text-sm mb-6">本地人农资服务站</p>
 
-        <!-- 主标签页容器 -->
+        <!-- 主标签页 -->
         <div class="bg-white rounded-xl shadow-sm mb-5 overflow-hidden">
-            <!-- 主标签头部 -->
             <div class="flex border-b border-gray-200">
-                <button data-tab="1" class="main-tab flex-1 py-3 px-2 text-center font-medium text-primary border-b-2 border-primary transition-colors">
-                    兑水量算药量
-                </button>
-                <button data-tab="2" class="main-tab flex-1 py-3 px-2 text-center font-medium text-gray-600 hover:text-primary transition-colors">
-                    用药量算水量
-                </button>
-                <button data-tab="3" class="main-tab flex-1 py-3 px-2 text-center font-medium text-gray-600 hover:text-primary transition-colors">
-                    浓度转倍数算药量
-                </button>
+                <button data-tab="1" class="main-tab flex-1 py-3 px-2 text-center font-medium text-primary border-b-2 border-primary">兑水量算药量</button>
+                <button data-tab="2" class="main-tab flex-1 py-3 px-2 text-center font-medium text-gray-600">用药量算水量</button>
+                <button data-tab="3" class="main-tab flex-1 py-3 px-2 text-center font-medium text-gray-600">PPM换算用药量</button>
             </div>
 
-            <!-- 模块1：兑水量 → 算用药量 -->
-            <div id="tab-content-1" class="tab-content p-4 md:p-5">
+            <!-- ============== 模块1：兑水量 → 算用药量 ============== -->
+            <div id="tab1" class="p-4 md:p-5 block">
                 <div class="space-y-4">
-                    <!-- 兑水量输入 -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">兑水量</label>
                         <div class="flex gap-2">
-                            <input 
-                                type="number" 
-                                id="water-1" 
-                                value="30" 
-                                min="0" 
-                                step="0.1"
-                                class="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                            >
-                            <select id="water-unit-1" class="w-20 px-2 border border-gray-300 rounded-lg text-base bg-white">
-                                <option value="jin">斤</option>
-                                <option value="liter">升</option>
-                                <option value="kg">千克</option>
-                                <option value="ton">吨</option>
-                                <option value="g">克</option>
-                                <option value="ml">毫升</option>
+                            <input type="number" id="water1" value="30" min="0" step="0.1" class="flex-1 px-3 py-2.5 border rounded-lg">
+                            <select id="unit1" class="w-20 px-2 border rounded-lg bg-white">
+                                <option value="jin">斤</option><option value="liter">升</option><option value="kg">千克</option>
+                                <option value="ton">吨</option><option value="g">克</option><option value="ml">毫升</option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- 水量快捷按钮 -->
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="setWaterQuick(15, 'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">15L</button>
-                        <button onclick="setWaterQuick(20, 'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">20L</button>
-                        <button onclick="setWaterQuick(25, 'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">25L</button>
-                        <button onclick="setWaterQuick(30, 'jin')" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">30斤</button>
-                        <button onclick="setWaterQuick(40, 'jin')" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">40斤</button>
+                        <button onclick="setWater(15,'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">15L</button>
+                        <button onclick="setWater(20,'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">20L</button>
+                        <button onclick="setWater(25,'liter')" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">25L</button>
+                        <button onclick="setWater(30,'jin')" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">30斤</button>
+                        <button onclick="setWater(40,'jin')" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">40斤</button>
                     </div>
-
-                    <!-- 稀释倍数输入 -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">稀释倍数</label>
-                        <input 
-                            type="number" 
-                            id="ratio-1" 
-                            min="1" 
-                            value="1000"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
+                        <input type="number" id="ratio1" min="1" value="1000" class="w-full px-3 py-2.5 border rounded-lg">
                     </div>
-
-                    <!-- 倍数快捷按钮 -->
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="setRatioQuick(500)" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">500倍</button>
-                        <button onclick="setRatioQuick(1000)" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">1000倍</button>
-                        <button onclick="setRatioQuick(1500)" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">1500倍</button>
-                        <button onclick="setRatioQuick(2000)" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">2000倍</button>
-                        <button onclick="setRatioQuick(3000)" class="px-3 py-1.5 bg-gray-100 rounded-md text-sm hover:bg-primary hover:text-white transition-colors">3000倍</button>
+                        <button onclick="setRatio(500)" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">500倍</button>
+                        <button onclick="setRatio(1000)" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">1000倍</button>
+                        <button onclick="setRatio(1500)" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">1500倍</button>
+                        <button onclick="setRatio(2000)" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">2000倍</button>
+                        <button onclick="setRatio(3000)" class="px-3 py-1.5 bg-gray-100 rounded-md hover:bg-primary hover:text-white">3000倍</button>
                     </div>
-
-                    <!-- 结果展示 -->
-                    <div class="bg-secondary p-5 rounded-lg text-center mt-5">
-                        <p class="text-xl md:text-2xl font-bold text-accent">
-                            需加药量：<span id="result-1">0.00</span> 克/毫升
-                        </p>
+                    <div class="bg-secondary p-4 rounded-lg text-center">
+                        <p class="text-xl font-bold text-accent">需加药量：<span id="res1">0.00</span> 克/毫升</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 模块2：用药量 → 算兑水量 -->
-            <div id="tab-content-2" class="tab-content p-4 md:p-5 hidden">
+            <!-- ============== 模块2：用药量 → 算兑水量 ============== -->
+            <div id="tab2" class="p-4 md:p-5 hidden">
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">用药量（克/毫升）</label>
-                        <input 
-                            type="number" 
-                            id="pesticide-2" 
-                            min="0" 
-                            step="0.1" 
-                            value="20"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
+                        <input type="number" id="med2" min="0" step="0.1" value="20" class="w-full px-3 py-2.5 border rounded-lg">
                     </div>
-
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">稀释倍数</label>
-                        <input 
-                            type="number" 
-                            id="ratio-2" 
-                            min="1" 
-                            value="1000"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
+                        <input type="number" id="ratio2" min="1" value="1000" class="w-full px-3 py-2.5 border rounded-lg">
                     </div>
-
-                    <!-- 结果展示 -->
-                    <div class="bg-secondary p-5 rounded-lg text-center mt-5">
-                        <p class="text-xl md:text-2xl font-bold text-accent">
-                            需兑水量：<span id="result-2-liter">0.00</span> 升 / <span id="result-2-jin">0.00</span> 斤
-                        </p>
-                        <p id="result-2-tip" class="text-sm text-gray-600 mt-2">常规浓度计算模式</p>
+                    <div class="bg-secondary p-4 rounded-lg text-center">
+                        <p class="text-xl font-bold text-accent">需兑水量：<span id="res2_l">0.00</span> 升 / <span id="res2_j">0.00</span> 斤</p>
+                        <p id="res2_tip" class="text-sm text-gray-600 mt-1">常规浓度计算模式</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 模块3：浓度转稀释倍数并计算用药量 -->
-            <div id="tab-content-3" class="tab-content p-4 md:p-5 hidden">
-                <!-- 子标签 -->
-                <div class="flex border-b border-gray-200 mb-4">
-                    <button data-subtab="1" class="sub-tab flex-1 py-2 text-center font-medium text-primary border-b-2 border-primary transition-colors">
-                        百分比换算
-                    </button>
-                    <button data-subtab="2" class="sub-tab flex-1 py-2 text-center font-medium text-gray-600 hover:text-primary transition-colors">
-                        ppm换算
-                    </button>
+            <!-- ============== 模块3：PPM换算用药量 ============== -->
+            <div id="tab3" class="p-4 md:p-5 hidden">
+                <div class="flex border-b mb-4">
+                    <button data-sub="1" class="sub-tab flex-1 py-2 text-center font-medium text-primary border-b-2 border-primary">目标PPM计算</button>
+                    <button data-sub="2" class="sub-tab flex-1 py-2 text-center font-medium text-gray-600">PPM算用药量</button>
                 </div>
 
-                <!-- 百分比换算子页 -->
-                <div id="subtab-content-1" class="sub-tab-content space-y-4">
+                <!-- 子1：目标PPM计算 -->
+                <div id="sub1" class="space-y-4 block">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">原药有效成分百分比（%）</label>
-                        <input 
-                            type="number" 
-                            id="percent-original" 
-                            step="0.1" 
-                            value="25"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">目标使用浓度百分比（%）</label>
-                        <input 
-                            type="number" 
-                            id="percent-target" 
-                            step="0.001" 
-                            value="0.05"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">总兑水量</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">用药量</label>
                         <div class="flex gap-2">
-                            <input 
-                                type="number" 
-                                id="water-3-percent" 
-                                value="30" 
-                                min="0" 
-                                step="0.1"
-                                class="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                            >
-                            <select id="water-unit-3-percent" class="w-20 px-2 border border-gray-300 rounded-lg text-base bg-white">
-                                <option value="jin">斤</option>
-                                <option value="liter">升</option>
-                                <option value="kg">千克</option>
-                                <option value="ton">吨</option>
-                                <option value="g">克</option>
-                                <option value="ml">毫升</option>
+                            <input type="number" id="ppm_med" min="0" step="0.001" value="10" class="flex-1 px-3 py-2.5 border rounded-lg">
+                            <select id="ppm_med_unit" class="w-20 px-2 border rounded-lg">
+                                <option value="g">克</option><option value="ml">毫升</option><option value="kg">千克</option><option value="liter">升</option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- 结果 -->
-                    <div class="bg-secondary p-5 rounded-lg text-center mt-3">
-                        <p class="text-lg font-bold text-accent mb-1">
-                            稀释倍数：<span id="result-3-ratio-percent">0</span> 倍
-                        </p>
-                        <p class="text-xl font-bold text-accent">
-                            需加药量：<span id="result-3-dose-percent">0.00</span> 克/毫升
-                        </p>
-                    </div>
-                </div>
-
-                <!-- ppm换算子页 -->
-                <div id="subtab-content-2" class="sub-tab-content space-y-4 hidden">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">原药有效成分百分比（%）</label>
-                        <input 
-                            type="number" 
-                            id="ppm-original" 
-                            step="0.1" 
-                            value="1.8"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
+                        <input type="number" id="ppm_p" min="0" step="0.1" value="1.8" class="w-full px-3 py-2.5 border rounded-lg">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">目标使用浓度（ppm）</label>
-                        <input 
-                            type="number" 
-                            id="ppm-target" 
-                            min="1" 
-                            value="9"
-                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                        >
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">总兑水量</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">配液总重量（兑水量）</label>
                         <div class="flex gap-2">
-                            <input 
-                                type="number" 
-                                id="water-3-ppm" 
-                                value="30" 
-                                min="0" 
-                                step="0.1"
-                                class="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg text-base"
-                            >
-                            <select id="water-unit-3-ppm" class="w-20 px-2 border border-gray-300 rounded-lg text-base bg-white">
-                                <option value="jin">斤</option>
-                                <option value="liter">升</option>
-                                <option value="kg">千克</option>
-                                <option value="ton">吨</option>
-                                <option value="g">克</option>
-                                <option value="ml">毫升</option>
+                            <input type="number" id="ppm_water" min="0" step="0.1" value="30" class="flex-1 px-3 py-2.5 border rounded-lg">
+                            <select id="ppm_water_unit" class="w-20 px-2 border rounded-lg">
+                                <option value="jin">斤</option><option value="kg">千克</option><option value="ton">吨</option>
                             </select>
                         </div>
                     </div>
+                    <div class="bg-secondary p-4 rounded-lg text-center">
+                        <p class="text-xl font-bold text-accent">目标PPM：<span id="res_ppm1">0.00</span></p>
+                    </div>
+                </div>
 
-                    <!-- 结果 -->
-                    <div class="bg-secondary p-5 rounded-lg text-center mt-3">
-                        <p class="text-lg font-bold text-accent mb-1">
-                            稀释倍数：<span id="result-3-ratio-ppm">0</span> 倍
-                        </p>
-                        <p class="text-xl font-bold text-accent">
-                            需加药量：<span id="result-3-dose-ppm">0.00</span> 克/毫升
-                        </p>
+                <!-- 子2：PPM算用药量 -->
+                <div id="sub2" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">目标PPM</label>
+                        <input type="number" id="target_ppm" min="0" value="9" class="w-full px-3 py-2.5 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">配液总重量（兑水量）</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="calc_water" min="0" step="0.1" value="30" class="flex-1 px-3 py-2.5 border rounded-lg">
+                            <select id="calc_water_unit" class="w-20 px-2 border rounded-lg">
+                                <option value="jin">斤</option><option value="kg">千克</option><option value="ton">吨</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">原药有效成分百分比（%）</label>
+                        <input type="number" id="calc_p" min="0" step="0.1" value="1.8" class="w-full px-3 py-2.5 border rounded-lg">
+                    </div>
+                    <div class="bg-secondary p-4 rounded-lg text-center">
+                        <p class="text-xl font-bold text-accent">需加药量：<span id="res_ppm2">0.00</span> 克/毫升</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 15L喷雾器速查表（可折叠） -->
+        <!-- 30斤喷雾器速查表 -->
         <div class="bg-white rounded-xl shadow-sm mb-5 overflow-hidden">
-            <button 
-                id="table-toggle"
-                class="w-full p-4 text-left font-medium text-primary flex justify-between items-center hover:bg-gray-50 transition-colors"
-            >
-                15L喷雾器常用配比速查表
-                <span id="table-arrow" class="transition-transform">▼</span>
+            <button onclick="toggleTable()" class="w-full p-4 text-left font-medium text-primary flex justify-between items-center">
+                30斤喷雾器常用配比速查表 <span id="arrow">▼</span>
             </button>
-            <div id="table-content" class="hidden border-t border-gray-100 p-4">
+            <div id="tableContent" class="hidden border-t p-4">
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-sm">
-                    <div class="p-2 bg-gray-50 rounded-md">500倍 → 30ml</div>
-                    <div class="p-2 bg-gray-50 rounded-md">1000倍 → 15ml</div>
-                    <div class="p-2 bg-gray-50 rounded-md">1500倍 → 10ml</div>
-                    <div class="p-2 bg-gray-50 rounded-md">2000倍 → 7.5ml</div>
-                    <div class="p-2 bg-gray-50 rounded-md">3000倍 → 5ml</div>
+                    <div class="p-2 bg-gray-50 rounded">500倍 → 30ml</div>
+                    <div class="p-2 bg-gray-50 rounded">1000倍 → 15ml</div>
+                    <div class="p-2 bg-gray-50 rounded">1500倍 → 10ml</div>
+                    <div class="p-2 bg-gray-50 rounded">2000倍 → 7.5ml</div>
+                    <div class="p-2 bg-gray-50 rounded">3000倍 → 5ml</div>
                 </div>
             </div>
         </div>
 
         <!-- 注意事项 -->
         <div class="bg-white rounded-xl shadow-sm p-4 md:p-5">
-            <h3 class="font-medium text-primary mb-3">注意事项</h3>
-            <ul class="text-sm text-gray-600 space-y-1.5 list-disc pl-5">
+            <h3 class="font-medium text-primary mb-2">注意事项</h3>
+            <ul class="text-sm text-gray-600 space-y-1 list-disc pl-5">
                 <li>常规农药密度接近水，1克≈1毫升，可通用</li>
                 <li>包装标注的稀释倍数已按制剂计算，直接使用即可</li>
                 <li>高浓度配药建议采用二次稀释法，药液更均匀</li>
@@ -307,161 +186,118 @@
     </div>
 
     <script>
-        // 单位统一换算为毫升（基于1克≈1毫升的农药通用近似）
-        function toMilliliter(value, unit) {
-            const num = parseFloat(value) || 0;
-            const unitMap = {
-                ton: 1000000,
-                kg: 1000,
-                jin: 500,
-                liter: 1000,
-                g: 1,
-                ml: 1
-            };
-            return num * (unitMap[unit] || 1);
+        // ========== 单位换算工具函数 ==========
+        // 水量转毫升（模块1用）
+        function toMl(val, unit) {
+            const n = parseFloat(val)||0;
+            const map = {ton:1e6, kg:1000, jin:500, liter:1000, g:1, ml:1};
+            return n * map[unit];
+        }
+        // 用药量转克（模块3用）
+        function toGram(val, unit) {
+            const n = parseFloat(val)||0;
+            const map = {g:1, ml:1, kg:1000, liter:1000};
+            return n * map[unit];
+        }
+        // 配液重量转千克（模块3用）
+        function toKg(val, unit) {
+            const n = parseFloat(val)||0;
+            const map = {jin:0.5, kg:1, ton:1000};
+            return n * map[unit];
         }
 
-        // 主标签页切换逻辑
+        // ========== 标签页切换 ==========
         const mainTabs = document.querySelectorAll('.main-tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        mainTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const index = tab.dataset.tab;
-                mainTabs.forEach(t => {
-                    t.classList.remove('text-primary', 'border-primary', 'border-b-2');
-                    t.classList.add('text-gray-600');
-                });
-                tab.classList.add('text-primary', 'border-primary', 'border-b-2');
-                tab.classList.remove('text-gray-600');
-                tabContents.forEach(c => c.classList.add('hidden'));
-                document.getElementById(`tab-content-${index}`).classList.remove('hidden');
-            });
-        });
+        const tabs = ['tab1','tab2','tab3'];
+        mainTabs.forEach((btn,i)=>btn.addEventListener('click',()=>{
+            mainTabs.forEach(t=>t.classList.remove('text-primary','border-primary'));
+            tabs.forEach(t=>document.getElementById(t).classList.add('hidden'));
+            btn.classList.add('text-primary','border-primary');
+            document.getElementById(tabs[i]).classList.remove('hidden');
+        }));
 
-        // 模块3子标签切换
         const subTabs = document.querySelectorAll('.sub-tab');
-        const subTabContents = document.querySelectorAll('.sub-tab-content');
-        subTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const index = tab.dataset.subtab;
-                subTabs.forEach(t => {
-                    t.classList.remove('text-primary', 'border-primary', 'border-b-2');
-                    t.classList.add('text-gray-600');
-                });
-                tab.classList.add('text-primary', 'border-primary', 'border-b-2');
-                tab.classList.remove('text-gray-600');
-                subTabContents.forEach(c => c.classList.add('hidden'));
-                document.getElementById(`subtab-content-${index}`).classList.remove('hidden');
-                calcModule3();
-            });
-        });
+        const subs = ['sub1','sub2'];
+        subTabs.forEach((btn,i)=>btn.addEventListener('click',()=>{
+            subTabs.forEach(t=>t.classList.remove('text-primary','border-primary'));
+            subs.forEach(t=>document.getElementById(t).classList.add('hidden'));
+            btn.classList.add('text-primary','border-primary');
+            document.getElementById(subs[i]).classList.remove('hidden');
+            calcPPM();
+        }));
 
-        // 快捷按钮功能
-        function setWaterQuick(value, unit) {
-            document.getElementById('water-1').value = value;
-            document.getElementById('water-unit-1').value = unit;
-            calcModule1();
+        // ========== 快捷按钮 ==========
+        function setWater(val, unit) {
+            document.getElementById('water1').value = val;
+            document.getElementById('unit1').value = unit;
+            calc1();
         }
-        function setRatioQuick(value) {
-            document.getElementById('ratio-1').value = value;
-            calcModule1();
+        function setRatio(val) {
+            document.getElementById('ratio1').value = val;
+            calc1();
+        }
+        function toggleTable() {
+            const el = document.getElementById('tableContent');
+            el.classList.toggle('hidden');
+            document.getElementById('arrow').textContent = el.classList.contains('hidden')?'▼':'▲';
         }
 
-        // 速查表折叠功能
-        document.getElementById('table-toggle').addEventListener('click', () => {
-            const content = document.getElementById('table-content');
-            const arrow = document.getElementById('table-arrow');
-            content.classList.toggle('hidden');
-            arrow.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-        });
-
-        // 模块1计算：兑水量 → 用药量
-        function calcModule1() {
-            const waterMl = toMilliliter(
-                document.getElementById('water-1').value,
-                document.getElementById('water-unit-1').value
-            );
-            const ratio = parseInt(document.getElementById('ratio-1').value) || 1;
-            const dose = (waterMl / ratio).toFixed(2);
-            document.getElementById('result-1').textContent = dose;
+        // ========== 模块1计算 ==========
+        function calc1() {
+            const water = toMl(document.getElementById('water1').value, document.getElementById('unit1').value);
+            const ratio = parseInt(document.getElementById('ratio1').value)||1;
+            document.getElementById('res1').textContent = (water/ratio).toFixed(2);
         }
 
-        // 模块2计算：用药量 → 兑水量
-        function calcModule2() {
-            const pesticide = parseFloat(document.getElementById('pesticide-2').value) || 0;
-            const ratio = parseInt(document.getElementById('ratio-2').value) || 1;
-            
-            let waterMl, tip;
-            if (ratio > 100) {
-                waterMl = pesticide * ratio;
-                tip = '常规浓度计算模式';
-            } else {
-                waterMl = pesticide * (ratio - 1);
-                tip = '高浓度计算模式（已扣除药剂体积）';
-            }
-            
-            document.getElementById('result-2-liter').textContent = (waterMl / 1000).toFixed(2);
-            document.getElementById('result-2-jin').textContent = (waterMl / 500).toFixed(2);
-            document.getElementById('result-2-tip').textContent = tip;
+        // ========== 模块2计算 ==========
+        function calc2() {
+            const med = parseFloat(document.getElementById('med2').value)||0;
+            const ratio = parseInt(document.getElementById('ratio2').value)||1;
+            let ml = ratio>100 ? med*ratio : med*(ratio-1);
+            const tip = ratio>100 ? '常规浓度计算模式' : '高浓度计算模式（已扣除药剂体积）';
+            document.getElementById('res2_l').textContent = (ml/1000).toFixed(2);
+            document.getElementById('res2_j').textContent = (ml/500).toFixed(2);
+            document.getElementById('res2_tip').textContent = tip;
         }
 
-        // 模块3计算：浓度转倍数 + 算用药量
-        function calcModule3() {
-            // 百分比换算
-            const origPercent = parseFloat(document.getElementById('percent-original').value) || 0;
-            const targetPercent = parseFloat(document.getElementById('percent-target').value) || 0.0001;
-            const ratioPercent = Math.round(origPercent / targetPercent) || 0;
-            const waterPercentMl = toMilliliter(
-                document.getElementById('water-3-percent').value,
-                document.getElementById('water-unit-3-percent').value
-            );
-            const dosePercent = ratioPercent > 0 ? (waterPercentMl / ratioPercent).toFixed(2) : '0.00';
-            
-            document.getElementById('result-3-ratio-percent').textContent = ratioPercent;
-            document.getElementById('result-3-dose-percent').textContent = dosePercent;
+        // ========== 模块3 PPM计算 ==========
+        function calcPPM() {
+            // 子1：目标PPM
+            const med = toGram(document.getElementById('ppm_med').value, document.getElementById('ppm_med_unit').value);
+            const p = parseFloat(document.getElementById('ppm_p').value)||0;
+            const water = toKg(document.getElementById('ppm_water').value, document.getElementById('ppm_water_unit').value);
+            const ppm1 = water===0 ? 0 : (med * p * 10 / water).toFixed(2);
+            document.getElementById('res_ppm1').textContent = ppm1;
 
-            // ppm换算
-            const origPpm = parseFloat(document.getElementById('ppm-original').value) || 0;
-            const targetPpm = parseInt(document.getElementById('ppm-target').value) || 1;
-            const ratioPpm = Math.round((origPpm * 10000) / targetPpm) || 0;
-            const waterPpmMl = toMilliliter(
-                document.getElementById('water-3-ppm').value,
-                document.getElementById('water-unit-3-ppm').value
-            );
-            const dosePpm = ratioPpm > 0 ? (waterPpmMl / ratioPpm).toFixed(2) : '0.00';
-            
-            document.getElementById('result-3-ratio-ppm').textContent = ratioPpm;
-            document.getElementById('result-3-dose-ppm').textContent = dosePpm;
+            // 子2：PPM算药量
+            const target = parseFloat(document.getElementById('target_ppm').value)||0;
+            const totalWater = toKg(document.getElementById('calc_water').value, document.getElementById('calc_water_unit').value);
+            const per = parseFloat(document.getElementById('calc_p').value)||0.0001;
+            const med2 = (target * totalWater / (per * 10)).toFixed(2);
+            document.getElementById('res_ppm2').textContent = med2;
         }
 
-        // 绑定实时计算事件
+        // ========== 实时计算绑定 ==========
         // 模块1
-        document.getElementById('water-1').addEventListener('input', calcModule1);
-        document.getElementById('water-unit-1').addEventListener('change', calcModule1);
-        document.getElementById('ratio-1').addEventListener('input', calcModule1);
-
+        document.getElementById('water1').addEventListener('input',calc1);
+        document.getElementById('unit1').addEventListener('change',calc1);
+        document.getElementById('ratio1').addEventListener('input',calc1);
         // 模块2
-        document.getElementById('pesticide-2').addEventListener('input', calcModule2);
-        document.getElementById('ratio-2').addEventListener('input', calcModule2);
+        document.getElementById('med2').addEventListener('input',calc2);
+        document.getElementById('ratio2').addEventListener('input',calc2);
+        // 模块3
+        document.getElementById('ppm_med').addEventListener('input',calcPPM);
+        document.getElementById('ppm_med_unit').addEventListener('change',calcPPM);
+        document.getElementById('ppm_p').addEventListener('input',calcPPM);
+        document.getElementById('ppm_water').addEventListener('input',calcPPM);
+        document.getElementById('ppm_water_unit').addEventListener('change',calcPPM);
+        document.getElementById('target_ppm').addEventListener('input',calcPPM);
+        document.getElementById('calc_water').addEventListener('input',calcPPM);
+        document.getElementById('calc_water_unit').addEventListener('change',calcPPM);
+        document.getElementById('calc_p').addEventListener('input',calcPPM);
 
-        // 模块3-百分比
-        document.getElementById('percent-original').addEventListener('input', calcModule3);
-        document.getElementById('percent-target').addEventListener('input', calcModule3);
-        document.getElementById('water-3-percent').addEventListener('input', calcModule3);
-        document.getElementById('water-unit-3-percent').addEventListener('change', calcModule3);
-
-        // 模块3-ppm
-        document.getElementById('ppm-original').addEventListener('input', calcModule3);
-        document.getElementById('ppm-target').addEventListener('input', calcModule3);
-        document.getElementById('water-3-ppm').addEventListener('input', calcModule3);
-        document.getElementById('water-unit-3-ppm').addEventListener('change', calcModule3);
-
-        // 页面加载初始化
-        window.addEventListener('load', () => {
-            calcModule1();
-            calcModule2();
-            calcModule3();
-        });
+        // 初始化
+        calc1(); calc2(); calcPPM();
     </script>
 </body>
 </html>
